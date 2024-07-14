@@ -10,6 +10,8 @@ def init_db():
                       (id INTEGER PRIMARY KEY, category TEXT, image BLOB, name TEXT, status TEXT)''')
     cursor.execute('''CREATE TABLE IF NOT EXISTS users
                       (id INTEGER PRIMARY KEY, username TEXT, password TEXT)''')
+    cursor.execute('''CREATE TABLE IF NOT EXISTS laundry_history
+                      (id INTEGER PRIMARY KEY, name TEXT, action TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
     conn.close()
 
@@ -88,3 +90,28 @@ def update_cloth_status(name, status):
     cursor.execute('UPDATE clothes SET status = ? WHERE name = ?', (status, name))
     conn.commit()
     conn.close()
+
+def add_laundry_history(name, action):
+    conn = sqlite3.connect('clothes.db')
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO laundry_history (name, action) VALUES (?, ?)', (name, action))
+    conn.commit()
+    conn.close()
+
+def get_laundry_history(name):
+    conn = sqlite3.connect('clothes.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM laundry_history WHERE name = ?', (name,))
+    history = cursor.fetchall()
+    history_df = pd.DataFrame(history, columns=['id', 'name', 'action', 'timestamp'])
+    conn.close()
+    return history_df
+
+def get_laundry_due():
+    conn = sqlite3.connect('clothes.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT name, MAX(timestamp) as last_action_time FROM laundry_history WHERE action = "Sent to Laundry" GROUP BY name')
+    due_clothes = cursor.fetchall()
+    due_df = pd.DataFrame(due_clothes, columns=['name', 'last_action_time'])
+    conn.close()
+    return due_df

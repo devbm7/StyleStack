@@ -1,5 +1,5 @@
 import streamlit as st
-from database import update_cloth_status, get_clothes_by_status
+from database import update_cloth_status, get_clothes_by_status, add_laundry_history
 
 def send_to_laundry():
     st.subheader("Send Cloth to Laundry")
@@ -9,6 +9,7 @@ def send_to_laundry():
     
     if st.button("Send to Laundry"):
         update_cloth_status(cloth_to_laundry, 'In Laundry')
+        add_laundry_history(cloth_to_laundry, 'Sent to Laundry')
         st.success("Cloth sent to laundry!")
 
 def return_from_laundry():
@@ -19,6 +20,7 @@ def return_from_laundry():
     
     if st.button("Return from Laundry"):
         update_cloth_status(cloth_from_laundry, 'In Closet')
+        add_laundry_history(cloth_from_laundry, 'Returned from Laundry')
         st.success("Cloth returned from laundry!")
 
 def get_laundry_clothes():

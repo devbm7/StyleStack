@@ -3,6 +3,9 @@ from clothes import add_cloth, update_cloth, delete_cloth, get_clothes_by_catego
 from laundry import send_to_laundry, return_from_laundry, get_laundry_clothes
 from auth import login, register
 from database import init_db
+from notifications import notify_due_clothes
+from analytics import display_analytics
+from history import display_history
 
 # Initialize database
 init_db()
@@ -23,7 +26,7 @@ def main():
             register()
     else:
         st.sidebar.title("Menu")
-        options = ["Add Cloth", "Update Cloth", "Delete Cloth", "View Clothes", "Manage Laundry"]
+        options = ["Add Cloth", "Update Cloth", "Delete Cloth", "View Clothes", "Manage Laundry", "Notifications", "Analytics", "History"]
         choice = st.sidebar.selectbox("Select Option", options)
 
         if choice == "Add Cloth":
@@ -36,6 +39,12 @@ def main():
             get_clothes_by_category()
         elif choice == "Manage Laundry":
             laundry_operations()
+        elif choice == "Notifications":
+            notify_due_clothes()
+        elif choice == "Analytics":
+            display_analytics()
+        elif choice == "History":
+            display_history()
 
 def laundry_operations():
     st.subheader("Manage Laundry")
