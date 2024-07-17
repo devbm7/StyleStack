@@ -7,6 +7,11 @@ from notifications import notify_due_clothes
 from analytics import display_analytics
 from history import display_history
 
+st.set_page_config(
+    page_title='StyleStack',
+    page_icon='logo.png'
+)
+
 # Initialize database
 init_db()
 
@@ -15,8 +20,10 @@ if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
 def main():
-    st.title("Clothes and Laundry Management System")
-
+    st.title(":rainbow[StyleStack]")
+    st.caption("Smart Style, Effortless Chic")
+    st.write('---')
+    st.sidebar.image(image='logo.png',width=140)
     if not st.session_state['logged_in']:
         st.sidebar.subheader("Login/Register")
         auth_choice = st.sidebar.selectbox("Select Action", ["Login", "Register"])
@@ -24,6 +31,7 @@ def main():
             login()
         else:
             register()
+            auth_choice = 'Login'
     else:
         st.sidebar.title("Menu")
         options = ["Add Cloth", "Update Cloth", "Delete Cloth", "View Clothes", "Manage Laundry", "Notifications", "Analytics", "History"]
