@@ -1,7 +1,9 @@
 # StyleStack
 
 **StyleStack** is a comprehensive Clothes and Laundry Management System designed to streamline wardrobe organization and laundry scheduling. It features clothing inventory management, laundry task tracking, and reminder settings. The system is ideal for individuals, families, and small businesses, providing an efficient solution for managing clothing items and laundry routines.
+You can visit the deployment at: https://stylestack.streamlit.app/
 
+Also a mobile version of this project is available at: https://github.com/devbm7/StyleStackMobile
 ## Features
 
 - **Clothing Inventory Management**: Add, edit, and delete clothing items with attributes like type, color, and size.
